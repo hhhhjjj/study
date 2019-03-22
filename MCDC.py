@@ -1,7 +1,6 @@
 # coding=utf-8
 import xlrd
 import xlwt
-# 这个破解的pdf版本还很低
 read_book = xlrd.open_workbook(r'C:\Users\he_junke\Desktop\HSI\BP512\C919-TC-HSI-S011(LOC Course angle).xlsx')
 write_book = xlwt.Workbook(r'C:\Users\he_junke\Desktop\HSI\BP512\C919-TC-HSI-S011(LOC Course angle).xlsx')
 sheet = read_book.sheet_by_index(3)
