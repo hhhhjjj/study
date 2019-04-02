@@ -73,7 +73,6 @@ class QSBK(object):
                     print("退出")
                     self.enable = False
                 else:
-                    print("回车")
                     self.page += 1
             else:
                 # 页面加载失败之后
