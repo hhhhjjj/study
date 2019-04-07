@@ -1,5 +1,5 @@
 """
-scratch qiushibaike
+爬英文网站
 先f12找到对应的内容位置
 再找所需要的具体部分，鼠标右键用检查就行了
 """
@@ -14,14 +14,14 @@ class Your_text(object):
         # 先构造内部的成员变量，属性这些
         # 这个是控制开关
         self.enable = True
-        # self.page = 1
         self.base_url = "https://www.scientificamerican.com/article/europe-stores-electricity-in-gas-pipes/?tdsourcetag=s_pcqq_aiomsg"
+        self.base_url1 = "https://www.scientificamerican.com/article/an-arizona-utility-is-betting-big-on-energy-storage/?tdsourcetag=s_pcqq_aiomsg"
         # 构建headers也是去F12看先去找user-agent
         self.headers = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:66.0) Gecko/20100101 Firefox/66.0"}
 
-    def loadpage(self):
+    def loadpage(self, url):
         # 抓取一页
-        url = self.base_url
+        # url = self.base_url
         request_page = request.Request(url, headers=self.headers)
         # 进行异常处理,怕网址不存在了
         try:
@@ -47,28 +47,34 @@ class Your_text(object):
         pattern = re.compile('<div class="mura-region-local"><p>(.*?)</p></div>', re.S)
         # 每一个元素构造一个list
         items = re.findall(pattern, page_content)
-        # 写之前先检验文件是否存在，存在就删掉
-        if os.path.exists("nlp.txt"):
-            os.remove("nlp.txt")
-        file = open("nlp.txt", "w+", encoding="utf-8")
+        file = open("nlp.txt", "r+", encoding="utf-8")
+        file.read()
         for item in items:
-            # 处理多出来的p标签和em标签
+            # 处理多出来的标签
             item = item.replace("<p>", "")
             item = item.replace("</p>", "")
             item = item.replace("<em>", "")
             item = item.replace("</em>", "")
+            item = item.replace("<h2>", "")
+            item = item.replace("</h2>", "")
+            # 处理超链接
+            item = item.replace("</a>", "")
+            deal_href = re.compile('(<a href=.*?>)', re.S)
+            the_href = re.findall(deal_href, item)
+            for href in the_href:
+                item = item.replace(href, "")
             # 处理html转义字符
             item = html.unescape(item)
             file.writelines(item)
             file.writelines("\n")
         file.close()
 
-    def start(self):
+    def start(self, url):
         # 在这不想用while true，想构造一个开关来控制这个
         while self.enable:
             # 先加载这一页
             # 命名一定要规范
-            page_tuple = self.loadpage()
+            page_tuple = self.loadpage(url)
             # 再来解析这一页
             # 这个返回值的第一个正好可以用作开关
             if page_tuple[0]:
@@ -89,4 +95,10 @@ class Your_text(object):
 
 
 my_nlp = Your_text()
-my_nlp.start()
+# 写之前先检验文件是否存在，存在就删掉
+if os.path.exists("nlp.txt"):
+    os.remove("nlp.txt")
+new_file = open("nlp.txt", "w+", encoding="utf-8")
+new_file.close()
+my_nlp.start(my_nlp.base_url)
+my_nlp.start(my_nlp.base_url1)
