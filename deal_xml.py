@@ -29,7 +29,8 @@ def parse_text(file_path):
     file.writelines(text)
     file.writelines("\n")
 
-
+    
+# 如果有就删了新建一个
 if os.path.exists("nlp.txt"):
     os.remove("nlp.txt")
 new_file = open("nlp.txt", "w+", encoding="utf-8")
