@@ -5,7 +5,7 @@ from sklearn.preprocessing import StandardScaler
 
 from sklearn.linear_model import LinearRegression  # 线性回归
 from sklearn.linear_model import SGDRegressor  # 快速随机梯队下降(Stochastic Gradient Descend)
-
+# 这个R评价方式考量回归值和真实值的差异，也兼顾了问题本身真实值的变动
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 
 # 加载房价数据
@@ -30,7 +30,8 @@ y_test = ss_y.transform(y_test.reshape(-1, 1))
 lr = LinearRegression()
 lr.fit(X_train, y_train)
 lr_y_predict = lr.predict(X_test)
-# SGDRegression，这个也就是梯度下降进行线性回归预测
+# SGDRegression，这个也就是随机梯度下降进行线性回归预测
+# 小样本随机梯度下降不咋地，但是训练数据大的话这个就高效很多了，能节省很多时间的
 sgdr = SGDRegressor()
 sgdr.fit(X_train, y_train)
 sgdr_y_predict = sgdr.predict(X_test)
