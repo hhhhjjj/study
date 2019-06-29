@@ -19,5 +19,11 @@ def wireshark_to_packet():
         f.write("[" + load_all[-1]['a']['b']['c']['d'][23:-12].replace(":", ",0x")[1:] + "]")
     f.close()
 
+    
+def read_txt():
+    with open("data.txt") as f:
+        for every_package in f.readlines():
+            print(every_package)
 
+            
 wireshark_to_packet()
