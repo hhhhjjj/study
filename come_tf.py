@@ -3,8 +3,9 @@ import tensorflow as tf
 # tf对数据类型要求比python高许多，就要定义 清楚才行
 v_one = tf.Variable(3)
 # 这个是变量
-c_two = tf.constant(1)
-# 这个是常量1，而且 这个变量必须要给值，不行的话就给placeholder并且给出类型
+c_two = tf.constant([1, 2])
+print(c_two)
+# 这个是常量，而且 这个变量必须要给值，不行的话就给placeholder并且给出类型,这个也可以给多维矩阵
 input1 = tf.placeholder(tf.int32)
 input2 = tf.placeholder(tf.int32)
 print(v_one)
