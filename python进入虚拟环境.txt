@@ -1,0 +1,2 @@
+先进入Sripts\直接拖activate.bat
+然后执行python脚本的命令用python 。。。。.py就行
